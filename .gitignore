@@ -30,6 +30,9 @@
 .vscode/
 .vsconfig
 
+# JetBrains Preferences
+.idea/
+
 # Gradle cache directory
 .gradle/
 
