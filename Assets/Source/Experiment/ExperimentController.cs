@@ -66,23 +66,23 @@ public class ExperimentController : MonoBehaviour
     /// </summary>
     private async void Start()
     {
-        currentExperimentState = ExperimentState.start;
-
-        Debug.Log("Loading demo.");
-        CybersickData.LoadData();
-
-        currentLevel = 0;
-
         Transform centeredPlayer = GameObject.Find("Player (Centered)")?.transform;
-
+        Transform vrCamera = GameObject.Find("Camera")?.transform;
+        
+        // If cannot find the VR player, load the start scene
         if (!centeredPlayer)
         {
             Debug.LogError("VR is not active!");
             LoadScene(startSceneName);
             return;
         }
-
-        Transform vrCamera = GameObject.Find("Camera").transform;
+        
+        Debug.Log("Loading experiment.");
+        
+        currentExperimentState = ExperimentState.start;
+        currentLevel = 0;
+        CybersickData.LoadData();
+        
         rollerCoasterTest.SetPlayerObjects(centeredPlayer, vrCamera);
         balanceTest.SetPlayerObjects(centeredPlayer, vrCamera);
         survey.SetPlayerObjects(centeredPlayer);
@@ -132,18 +132,19 @@ public class ExperimentController : MonoBehaviour
                 currentExperimentState = survey.Tick();
                 break;
             case ExperimentState.send:
-                if (surveyURL.Length > 0)
-                {
-                    StartCoroutine(SendLevelToQualtrics(currentLevel, rollerCoasterTest.GetTargetsDestroyedRatio(), rollerCoasterTest.GetRunTime(),
-                        balanceTest.GetMomentOfInertiaResults(), survey.Scales));
-                }
-                else
-                {
-                    Debug.LogError("No survey URL set. Please add a survey URL if you wish to record data.");
-                }
-
                 if (currentLevel < levels)
                 {
+                    if (surveyURL.Length > 0)
+                    {
+                        StartCoroutine(SendLevelToQualtrics(currentLevel,
+                            rollerCoasterTest.GetTargetsDestroyedRatio(), rollerCoasterTest.GetRunTime(),
+                            balanceTest.GetMomentOfInertiaResults(), survey.Scales));
+                    }
+                    else
+                    {
+                        Debug.LogError("No survey URL set. Please add a survey URL if you wish to record data.");
+                    }
+                    
                     currentLevel++;
                     currentExperimentState = ExperimentState.rollerCoasterTest;
                 }
@@ -155,6 +156,17 @@ public class ExperimentController : MonoBehaviour
             case ExperimentState.end:
                 if (!isLoadingScene)
                 {
+                    if (surveyURL.Length > 0)
+                    {
+                        StartCoroutine(SendLevelToQualtrics(currentLevel,
+                            rollerCoasterTest.GetTargetsDestroyedRatio(), rollerCoasterTest.GetRunTime(),
+                            balanceTest.GetMomentOfInertiaResults(), survey.Scales));
+                    }
+                    else
+                    {
+                        Debug.LogError("No survey URL set. Please add a survey URL if you wish to record data.");
+                    }
+                    
                     isLoadingScene = true;
                     LoadScene("Exit_Scene");
                 }
@@ -178,7 +190,7 @@ public class ExperimentController : MonoBehaviour
         form.AddField("session", CybersickData.Session);
         form.AddField("level", level);
 
-        form.AddField("balloons popped ratio", balloonsPoppedRatio.ToString());
+        form.AddField("balloon popped ratio", balloonsPoppedRatio.ToString());
         form.AddField("moment of inertia", moi.ToString());
 
         foreach (Survey.MatrixScale scale in scales)

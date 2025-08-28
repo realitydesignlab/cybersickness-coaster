@@ -89,7 +89,6 @@ public class Survey : MonoBehaviour
     private bool changedToggleThisTick;
 
     [SerializeField] private Button finishedSurveyButton;
-    private bool finishedSurvey;
 
     [SerializeField] private float textDistanceFromHead = 2.0f;
     [SerializeField] private float textHeight = 1.5f;
@@ -100,7 +99,7 @@ public class Survey : MonoBehaviour
 
     private VRPointers vrPointers;
 
-    [SerializeField] private readonly int endExperimentThreshold;
+    [SerializeField] private float endExperimentThreshold;
 
 
     public Action<bool> SetUpAction;
@@ -110,7 +109,6 @@ public class Survey : MonoBehaviour
     /// </summary>
     private void Start()
     {
-        finishedSurvey = false;
         text.SetActive(false);
         currentSurveyState = SurveyState.setup;
 
@@ -189,16 +187,15 @@ public class Survey : MonoBehaviour
                 currentSurveyState = SetUp();
                 break;
             case SurveyState.waiting:
-                currentSurveyState = Wait();
                 changedToggleThisTick = false;
                 break;
             case SurveyState.end:
                 End();
-                return ExperimentState.send; // order of events?
+                return ExperimentState.send;
             case SurveyState.quit:
                 return ExperimentState.end;
         }
-        return ExperimentState.survey; // CHECK THIS STATEMENT IF ISSUES WITH SURVEY NOT EXECUTING
+        return ExperimentState.survey;
     }
 
     /// <summary>
@@ -218,7 +215,6 @@ public class Survey : MonoBehaviour
     {
         SetUpAction?.Invoke(false);
         text.SetActive(true);
-        finishedSurvey = false;
 
         ClearSurvey();
         vrPointers.enabled = true;
@@ -228,22 +224,6 @@ public class Survey : MonoBehaviour
         position.y += textHeight;
         text.transform.position = position;
         return SurveyState.waiting;
-    }
-
-    /// <summary>
-    /// Waits for the player to finish the survey.
-    /// </summary>
-    /// <returns>The next survey state.</returns>
-    private SurveyState Wait()
-    {
-        if (finishedSurvey)
-        {
-            return SurveyState.end;
-        }
-        else
-        {
-            return SurveyState.waiting;
-        }
     }
 
     /// <summary>
@@ -296,8 +276,6 @@ public class Survey : MonoBehaviour
     /// </summary>
     public void FinishSurvey()
     {
-        finishedSurvey = true;
-
         int totalScores = 0;
         foreach (MatrixScale scale in scales)
         {
@@ -305,9 +283,13 @@ public class Survey : MonoBehaviour
         }
 
         // If the average score is greater than the threshold, end the experiment. The user is feeling too uncomfortable.
-        if (totalScores / scales.Length >= endExperimentThreshold)
+        if ((float) totalScores / scales.Length >= endExperimentThreshold)
         {
             currentSurveyState = SurveyState.quit;
+        }
+        else
+        {
+            currentSurveyState = SurveyState.end;
         }
     }
 

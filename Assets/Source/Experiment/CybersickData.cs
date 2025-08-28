@@ -7,8 +7,8 @@ using UnityEngine;
 [System.Serializable]
 public class CybersickData
 {
-    private string pid;
-    private int session;
+    public string pid;
+    public int session;
     private static CybersickData instance;
 
     /// <summary>
