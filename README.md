@@ -12,12 +12,12 @@ Participants repeat this cycle for a predetermined number of levels within the e
 
 You can run the experiment within the editor or via build.
 
-**Note:** To record experiment data, make sure that `cybersickness.json` is located in the `Assets/` folder when running from the Unity editor, or in the game data folder when running a built version of the project. `cybersickness.json` must be edited by the experimenter beforehand to contain a unique identifier PID for the participant and a session number. This is for tracking participant information submitted to the qualtrics survey across multiple levels and sessions.
+**Note:** To record experiment data, make sure that `cybersickness.json` is located in the `Assets/` folder when running from the Unity editor, or in the game data folder when running a built version of the project. `cybersickness.json` must be edited by the experimenter beforehand to contain a unique identifier PID string for the participant and a session number integer. This is for tracking participant information submitted to the qualtrics survey across multiple levels and sessions.
 
 Example `cybersickness.json`:
 ```json
 {
-  "pid": 1,
+  "pid": "1",
   "session": 1
 }
 ```
@@ -168,7 +168,7 @@ This application expects to make a POST request with the following query paramet
 | `pid` | string | Participant ID |
 | `session` | integer | Experiment session number for the user |
 | `level` | integer | Level number within a single session |
-| `balloons popped ratio` | string | Balloons popped to balloons spawned ratio |
+| `balloon popped ratio` | string | Balloons popped to balloons spawned ratio |
 | `moment of inertia` | string | Balance measurement |
 | `general discomfort` | string | Survey response |
 | `fatigue` | string | Survey response |
@@ -181,3 +181,4 @@ This application expects to make a POST request with the following query paramet
 | `vertigo` | string | Survey response |
 | `running time` | string | Time elapsed at the end of the latest roller coaster ride |
 
+The API endpoint must be added to the `Survey URL` field in the `Experiment Controller` component in `Experiment_Scene`.

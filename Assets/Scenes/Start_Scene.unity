@@ -1484,8 +1484,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b43fd6cc13c5d564f89320aec1b492be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  leftHand: {fileID: 0}
-  rightHand: {fileID: 0}
 --- !u!114 &169429231
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1706,7 +1704,7 @@ GameObject:
   - component: {fileID: 366316346}
   - component: {fileID: 366316349}
   m_Layer: 9
-  m_Name: Demo Instructions
+  m_Name: Experiment Instructions
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1806,31 +1804,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bfa2c48df6112984da48f26e2c93b973, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audioClip: {fileID: 8300000, guid: 80d8c4fc54fb1c04999dc0bee2e0c9e8, type: 3}
+  audioClip: {fileID: 8300000, guid: aec8201af1f015d42967f134f1ab1e1a, type: 3}
   volume: 1
   source: {fileID: 607399307}
   subtitles:
   - text: This application is designed to test your tolerance to cybersickness. The
       session is estimated to take about 20 minutes.
-    endTime: 7.3
+    endTime: 8
   - text: Testing consists of multiple rounds where you will ride a roller coaster,
       have your balance measured, and answer a short survey.
-    endTime: 14.5
+    endTime: 15.3
   - text: While riding the roller coaster, search for the green spheres that appear
       in front of you. When you find a sphere, look directly at it until it disappears.
-    endTime: 22.6
+    endTime: 24.2
   - text: After the roller coaster ends, you will have your balance measured. Stay
       as still as possible until the countdown ends.
-    endTime: 29
+    endTime: 31.3
   - text: Lastily, you will be asked to complete a survey to measure symptoms of
       cybersickness.
-    endTime: 34
+    endTime: 37.3
   - text: 'Press the escape key to quit the application at any time. Exit VR if you
       feel you cannot continue. '
-    endTime: 39.9
+    endTime: 44.4
   - text: Press the left trigger to replay the instructions or press the right trigger
       to continue.
-    endTime: 40
+    endTime: 44.5
   text: {fileID: 560565908}
   isSkippable: 1
   isReplayable: 0
@@ -2207,9 +2205,9 @@ MonoBehaviour:
   source: {fileID: 607399307}
   subtitles:
   - text: Beyond this menu, quitting will count for your final score in this session.
-    endTime: 8.3
-  - text: Press the right trigger to start the demo.
-    endTime: 8.4
+    endTime: 5.4
+  - text: Press the right trigger to start the experiment.
+    endTime: 5.5
   text: {fileID: 1760140473}
   isSkippable: 1
   isReplayable: 0
@@ -3057,7 +3055,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bfa2c48df6112984da48f26e2c93b973, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audioClip: {fileID: 8300000, guid: a9f470314c261354eb4d0b040691e94f, type: 3}
+  audioClip: {fileID: 8300000, guid: d5570980d70b2e044a1c37bb2f7b8cfb, type: 3}
   volume: 1
   source: {fileID: 607399307}
   subtitles:

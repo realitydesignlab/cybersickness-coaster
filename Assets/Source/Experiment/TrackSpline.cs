@@ -490,9 +490,10 @@ public class TrackSpline : MonoBehaviour
     /// </summary>
     public void LoadTrack()
     {
-        foreach (SplinePoint point in points)
+        for (int i = 0; i < transform.childCount; i++)
         {
-            DestroyImmediate(point.GameObject);
+            Transform child = transform.GetChild(i);
+            DestroyImmediate(child.gameObject);
         }
 
         gravity = track.Gravity;
